@@ -1,0 +1,36 @@
+
+.chatintro--container {
+    width: 100%;
+    height: 100%;
+}
+
+.chatintro-content--container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 6px 2px 6px;
+}
+
+.head-line-1 {
+    font-size: var(--big-variant-font);
+    color: #C2C2C2;
+    margin-bottom: 10px;
+    font-weight: normal;
+}
+
+.head-line-3 {
+    font-size: var(--medium-font);
+    text-align: center;
+    font-weight: normal;
+    color: #C2C2C2;
+    line-height: 22px;
+}
+
+.chatintro-border-line {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, #00806900, #00806931, #00806900);
+}

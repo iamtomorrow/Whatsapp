@@ -1,0 +1,31 @@
+
+.new-chat-item--container {
+    cursor: pointer;
+    width: 100%;
+    height: 70px;
+    transition: var(--transmutation-default);
+    display: flex;
+    align-items: center;
+    border-radius: 3px;
+    justify-content: space-between;
+    padding: 2px 4px 2px 4px ;
+}
+.new-chat-item--container:hover {
+    opacity: .6;
+    transition: var(--transmutation-default);
+}
+
+.item-left--container {
+    width: 50px;
+    height: 100%;
+}
+
+.new-chat-item-photoURL {
+    width: 100%;
+    border-radius: 50%;
+}
+
+.new-chat-name {
+    color: #ffffff;
+    font-size: var(--medium-font);
+}

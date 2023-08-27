@@ -1,0 +1,68 @@
+
+.chatlist-item--container {
+    cursor: pointer;
+    width: 100%;
+    height: 70px;
+    transition: var(--transmutation-default);
+    display: flex;
+    align-items: center;
+    border-radius: 3px;
+    justify-content: space-between;
+    padding: 2px 4px 2px 4px ;
+}
+
+.chatlist-item--container:hover {
+    opacity: .6;
+    transition: var(--transmutation-default);
+}
+.chatlist-item--container.active {
+    background-color: var(--active-color);
+}
+
+.item-border-bottom {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, #00806900, #00806931, #00806900);
+}
+.item-left--container, .item-right--container {
+    width: 70px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.item-user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #0080698c;
+}
+.chat-avatar {
+    width: 100%;
+    border-radius: 50%;
+}
+
+.item-central--container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    padding: 0 2px 0px 10px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+.chatlist-name {
+    font-size: var(  --medium-font);
+    color: #ffffff;
+    font-weight: bold;
+}
+.chatlist-lastmsg {
+    font-size: var(--small-font);
+    color: #ffffff72;
+    flex-wrap: nowrap;
+    overflow: hidden;
+}
+.chatlist-lasttime {
+    color: #ffffff72;
+    font-size: var(--small-font);
+}
