@@ -21,9 +21,8 @@ export const ChatWindow = ( { chatInfo, user } ) => {
     const [ emojiBarToggle, setEmojiBarToggle ] = useState(false);
     const [ message, setMessage ] = useState("");
     const [ listening, setListening ] = useState(false);
-    const [ messageList, setMessageList ] = useState([{
-        id: "242", author: "232", content: "Hey", name: "u", date: "we"
-    }]);
+    const [ messageList, setMessageList ] = useState([]);
+    const [ sent, setSent ] = useState(false);
 
     useEffect( ( ) => {
         if (chatBody.current.scrollHeight > chatBody.current.clientHeight) {
@@ -43,9 +42,15 @@ export const ChatWindow = ( { chatInfo, user } ) => {
         }
     }
 
+    const handleMessageChange = ( e ) => {
+        console.log(e);
+        setMessage(e.target.value);
+    }
+
     const handleSendClick = ( ) => {
         setEmojiBarToggle(false);
-        
+        setSent(true);
+
         if (message !== "") {
             let newMessage = {
                 uid: `${Math.random() * 10}`,
@@ -59,9 +64,8 @@ export const ChatWindow = ( { chatInfo, user } ) => {
     }
 
     useEffect( ( ) => {
-        // console.log("...");
         API.getMessageList( chatInfo, setMessageList );
-    }, [message]);
+    }, [ sent ]);
 
     return (
         <div className='chat-window--container'>
@@ -126,7 +130,7 @@ export const ChatWindow = ( { chatInfo, user } ) => {
                                        placeholder='Type a message here...' 
                                        className='chat-window-input'
                                        value={ message }
-                                       onChange={ (e) => setMessage(e.target.value)} />
+                                       onChange={ handleMessageChange } />
                             </div>
                         </div>
                         <div className='chat-window-footer-right--container'>

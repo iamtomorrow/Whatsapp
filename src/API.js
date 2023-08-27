@@ -2,7 +2,7 @@
 import { auth, database } from "./Auth/firebase";
 import { GoogleAuthProvider, GithubAuthProvider, signInWithPopup } from "firebase/auth";
 import { 
-    collection, getDocs, addDoc, updateDoc, where, query, arrayUnion, doc, setDoc, getDoc
+    collection, getDocs, addDoc, updateDoc, where, query, arrayUnion, doc, setDoc, getDoc, onSnapshot
 } from "firebase/firestore";
 
 export const API = {
@@ -107,7 +107,14 @@ export const API = {
             snapshot.docs.forEach((doc) => {
                 if ( doc.id === chatInfo.chat_id ) {
                     setMessageList(doc.data().messages);
-                    // console.log(doc.data());
+                }
+            })
+        })
+
+        onSnapshot(collection(database, "chats"), ( snapshot ) => {
+            snapshot.docs.forEach((doc) => {
+                if ( doc.id === chatInfo.chat_id ) {
+                    setMessageList(doc.data().messages);
                 }
             })
         })

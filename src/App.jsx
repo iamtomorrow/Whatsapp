@@ -34,12 +34,16 @@ export const App = () => {
     setToggleNewChat( !toggleNewChat );
   }
 
-  useEffect(() => {
-      if (user !== undefined && user !== null) {API.getActiveChats( user.uid, setChats );
+  useEffect( () => {
+    const getChats = async ( ) => {
+      if (user !== undefined && user !== null) {
+        await API.getActiveChats( user.uid, setChats );
         console.log(chats);
       } else {
         return ( <LoginWindow /> )
       }
+    }
+    getChats();
   }, [ user ]);
 
   return (
