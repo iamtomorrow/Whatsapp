@@ -13,6 +13,7 @@ import MicrophoneIcon from '@material-ui/icons/Mic';
 
 import { useState, useRef, useEffect } from 'react';
 import { MessageItem } from '../MessageItem/MessageItem';
+import { ChatModal } from '../ChatModal/ChatModal';
 import { API } from '../../API';
 
 export const ChatWindow = ( { chatInfo, user } ) => {
@@ -23,16 +24,21 @@ export const ChatWindow = ( { chatInfo, user } ) => {
     const [ listening, setListening ] = useState(false);
     const [ messageList, setMessageList ] = useState([]);
     const [ sent, setSent ] = useState(false);
+    const [ toggleChatModel, setToggleChatModal ] = useState(false);
 
     useEffect( ( ) => {
         if (chatBody.current.scrollHeight > chatBody.current.clientHeight) {
             chatBody.current.scrollTo(0, chatBody.current.scrollHeight - chatBody.current.clientHeight);
         }
-    }, [messageList]);
+    }, [ messageList ]);
 
     const toggleEmojiBar = ( ) => {
         setEmojiBarToggle(!emojiBarToggle);
     }
+
+    useEffect(() => {
+        console.log(messageList.length);
+    })
 
     const handleMicrophoneClick = ( ) => {
         if (!listening) {
@@ -43,7 +49,6 @@ export const ChatWindow = ( { chatInfo, user } ) => {
     }
 
     const handleMessageChange = ( e ) => {
-        console.log(e);
         setMessage(e.target.value);
     }
 
@@ -63,14 +68,21 @@ export const ChatWindow = ( { chatInfo, user } ) => {
         }
     }
 
+    const handleMoreClick = ( ) => {
+        setToggleChatModal(!toggleChatModel);
+    }
+
     useEffect( ( ) => {
         API.getMessageList( chatInfo, setMessageList );
     }, [ sent ]);
 
     return (
-        <div className='chat-window--container'>
+        <div className='chat-window--container' >
             <div className='chat-window-inner--container'>
-                <header className='chat-window-header'>
+                { toggleChatModel &&
+                    <ChatModal onCloseChatClick={ () => setMessageList([]) } />
+                }
+                <header className='chat-window-header' >
                     <div className='chat-window-info--container'>
                         <div className='chat-window-avatar--container'>
                             <img src={ chatInfo?.image } className='chat-avatar' />
@@ -87,7 +99,7 @@ export const ChatWindow = ( { chatInfo, user } ) => {
                         <div className='chat-window-button'>
                             <AttachFileIcon className='chat-window-icon' />
                         </div>
-                        <div className='chat-window-button'>
+                        <div className='chat-window-button' onClick={ handleMoreClick } >
                             <MoreVertIcon className='chat-window-icon' />
                         </div>
                     </div>

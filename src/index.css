@@ -3,6 +3,15 @@
   margin: 0;
   box-sizing: border-box;
   font-family: Emirates-Medium;
+
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  background-color: var(--primary-color);
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--surface-variant-color);
 }
 
 body {
@@ -41,6 +50,9 @@ body {
   --surface-variant-color: #037561;
 
   --epr-emoji-size: 10px;
+  
+  scrollbar-width: 5px;
+  scrollbar-color: var(--surface-variant-color);
 }
 
 @font-face {

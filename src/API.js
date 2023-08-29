@@ -95,7 +95,11 @@ export const API = {
     getActiveChats: async ( userId, setChats ) => {
         await getDoc(doc(database, "users", userId))
         .then((snapshot) => {
-            setChats(snapshot.data().chats);
+            setChats( snapshot.data().chats );
+        })
+
+        onSnapshot(doc(database, "users", userId), (snapshot) => {
+            setChats( snapshot.data().chats );
         })
     },
 
@@ -106,7 +110,7 @@ export const API = {
         .then((snapshot) => {
             snapshot.docs.forEach((doc) => {
                 if ( doc.id === chatInfo.chat_id ) {
-                    setMessageList(doc.data().messages);
+                    setMessageList( doc.data().messages );
                 }
             })
         })

@@ -20,10 +20,12 @@ import { API } from "./API";
 
 export const App = () => {
   const [ chats, setChats ] = useState([]);
-  const [ toggleNewChat, setToggleNewChat ] = useState(false);
-  const [ chatActive, setChatActive ] = useState();
+  const [ backChats, setBackChats ] = useState();
+  const [ toggleNewChat, setToggleNewChat ] = useState( false );
+  const [ chatActive, setChatActive ] = useState( false );
   const [ currentChat, setCurrentChat ] = useState();
-  const [ user, setUser ] = useAuthState(auth);
+  const [ user, setUser ] = useAuthState( auth );
+  const [ search, setSearch ] = useState("");
 
   const handleChatClick = (id, item) => {
     setChatActive( id );
@@ -34,11 +36,25 @@ export const App = () => {
     setToggleNewChat( !toggleNewChat );
   }
 
+  useEffect(() => {
+    if (search === "") {
+      setChats(backChats);
+    } else {
+      setChats(prev => prev.filter((d) => { 
+        let reg = new RegExp(`${search}`, "gi");
+        console.log(d.title.match(reg))
+        if (d.title.match(reg) !== null ) {
+          return d
+        }
+        }));
+    }
+  }, [ search ])
+
   useEffect( () => {
     const getChats = async ( ) => {
       if (user !== undefined && user !== null) {
         await API.getActiveChats( user.uid, setChats );
-        console.log(chats);
+        setBackChats(chats);
       } else {
         return ( <LoginWindow /> )
       }
@@ -90,7 +106,9 @@ export const App = () => {
                 </div>
                 <input type="search" 
                       placeholder="Search for contacts" 
-                      className="search-input" />
+                      className="search-input"
+                      value={ search }
+                      onChange={ e => setSearch(e.target.value) } />
               </div>
             </div>
           </div>
@@ -114,16 +132,16 @@ export const App = () => {
           </div>
 
           <div className="left-bottom--container">
-
+              
           </div>
         </div>
       </div>
       <div className="right--container">
         <div className="right-inner--container">
-          { chatActive === undefined &&
+          { chatActive === false &&
               <ChatIntro />
           }
-          { chatActive !== undefined &&
+          { chatActive !== false &&
               <ChatWindow chatInfo={ currentChat } user={ user } />
           }
         </div>
