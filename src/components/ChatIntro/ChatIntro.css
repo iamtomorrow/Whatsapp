@@ -34,3 +34,7 @@
     height: 2px;
     background: linear-gradient(90deg, #00806900, #00806931, #00806900);
 }
+
+#banner-image {
+    width: 200px;
+}

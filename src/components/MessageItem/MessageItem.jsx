@@ -8,9 +8,11 @@ export const MessageItem = ( { data, user, id } ) => {
 
     const convertTime = ( ) => {
         let date = new Date(data.date * 1000);
+        let day = date.getDate() + 1;
+        let month = date.getMonth() + 1;
         let hours = date.getHours();
         let minutes = "0" + date.getMinutes();
-        setDate(hours + ":" + minutes.substring(1, 3));
+        setDate(day + " | " +hours + ":" + minutes.substring(1, 3));
     }
 
     useEffect(() => {

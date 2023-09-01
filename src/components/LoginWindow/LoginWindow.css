@@ -34,14 +34,14 @@
     margin-top: 10px;
     margin-bottom: 10px;
     width: 280px;
-    height: 60px;
+    height: 50px;
     border-radius: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--gradient-color-top);
     box-shadow: var(--container-elevation);
     transition: var(--transmutation-default);
+    border: 1px solid rgba(75, 75, 75, 0.096);
 }
 .login-card--container:hover {
     opacity: .6;

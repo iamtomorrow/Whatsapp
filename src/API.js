@@ -47,13 +47,23 @@ export const API = {
 
     getChats: async ( id ) => {
         const collectionRef = collection(database, "users");
-        let list = [ ]
+        let list = [ ];
+        let chats = [ ];
+
+        await getDoc(doc(database, "users", id))
+        .then((snapshot) => {
+            if (snapshot.data().chats) {
+                snapshot.data().chats.forEach((c) => {
+                    chats.push(c.with);
+                });
+            }
+        })
 
         await getDocs( collectionRef )
         .then((snapshot) => {
             snapshot.docs.forEach((doc) => {
                 if ( doc.data().uid !== id) {
-                    list.push(doc.data());
+                    chats.includes(doc.data().uid) ? "" : list.push(doc.data());
                 }
             })
         })
@@ -62,8 +72,7 @@ export const API = {
 
     addNewChat: async ( user, user2 ) => {
         const collectionRef = collection(database, "chats");
-        // const userCollectionRef = doc(database, "chat");
-
+        
         const newChat = await addDoc(collectionRef, {
             users: [ user.uid, user2.uid ],
             messages: []

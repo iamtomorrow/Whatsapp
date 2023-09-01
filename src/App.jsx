@@ -1,6 +1,7 @@
 
 import "./App.css";
-import Logo from '../public/images/logo.png';
+import Logo from '../public/images/logo-1.png';
+
 import ChatIcon from "@material-ui/icons/Chat";
 import DonutLargeIcon from '@material-ui/icons/DonutLarge';
 import MoreVert from "@material-ui/icons/MoreVert";
@@ -24,10 +25,10 @@ export const App = () => {
   const [ toggleNewChat, setToggleNewChat ] = useState( false );
   const [ chatActive, setChatActive ] = useState( false );
   const [ currentChat, setCurrentChat ] = useState();
-  const [ user, setUser ] = useAuthState( auth );
+  const [ user, loading ] = useAuthState( auth );
   const [ search, setSearch ] = useState("");
 
-  const handleChatClick = (id, item) => {
+  const handleChatClick = ( id, item ) => {
     setChatActive( id );
     setCurrentChat( item );
   }
@@ -38,13 +39,16 @@ export const App = () => {
 
   useEffect(() => {
     if (search === "") {
-      setChats(backChats);
+      setChats( backChats );
     } else {
       setChats(prev => prev.filter((d) => { 
-        let reg = new RegExp(`${search}`, "gi");
-        console.log(d.title.match(reg))
-        if (d.title.match(reg) !== null ) {
-          return d
+        if ( search !== "") {
+          let reg = new RegExp(`${search}`, "gi");
+          if (d.title.match(reg) !== null ) {
+            return d;
+          }
+        } else {
+          return backChats;
         }
         }));
     }
@@ -52,15 +56,18 @@ export const App = () => {
 
   useEffect( () => {
     const getChats = async ( ) => {
-      if (user !== undefined && user !== null) {
+      if ( user ) {
+        console.log(user.uid);
         await API.getActiveChats( user.uid, setChats );
         setBackChats(chats);
-      } else {
-        return ( <LoginWindow /> )
       }
     }
     getChats();
   }, [ user ]);
+
+  if (user === null) {
+    return <LoginWindow />
+  }
 
   return (
     <div className='container'>
@@ -117,7 +124,8 @@ export const App = () => {
             <div className="chatlist--container">
               { chats &&
                   chats.map(item => (
-                    <ChatlistItem 
+                    <>
+                      <ChatlistItem 
                       image={ item.image }
                       id={ item?.chat_id }
                       name={ item?.title } 
@@ -126,6 +134,7 @@ export const App = () => {
                       active={ item.id === chatActive ? true : false }
                       onItemClick={ () => handleChatClick( item?.chat_id, item ) } 
                     />
+                    </>
                   ))
               }
             </div>

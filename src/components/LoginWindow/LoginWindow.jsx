@@ -1,13 +1,11 @@
 
-import Logo from "../../../public/images/logo.png";
+import Logo from "../../../public/images/logo-1.png";
 import './LoginWindow.css';
-// import FacebookIcon from "@material-ui/icons/Facebook";
 import GithubIcon from "remixicon-react/GithubFillIcon";
 import GoogleIcon from "remixicon-react/GoogleFillIcon";
-
 import { API } from "../../API";
 
-export const LoginWindow = ( ) => {
+export const LoginWindow = ( { onReceive } ) => {
     const handleGoogleLogin = async ( ) => {
         await API.getGoogleAuth();
     }

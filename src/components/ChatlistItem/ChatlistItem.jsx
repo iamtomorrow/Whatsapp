@@ -17,10 +17,6 @@ export const ChatlistItem = ( { id, image, name, last_msg, last_time, active, on
         convertTime();
     }, []);
 
-    useEffect(() => { 
-
-    }, [])
-
     return (
         <>
             <div className={`chatlist-item--container ${ active ? "active" : ""} `} key={ `${id}` } onClick={ onItemClick }>

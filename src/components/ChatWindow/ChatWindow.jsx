@@ -25,6 +25,7 @@ export const ChatWindow = ( { chatInfo, user } ) => {
     const [ messageList, setMessageList ] = useState([]);
     const [ sent, setSent ] = useState(false);
     const [ toggleChatModel, setToggleChatModal ] = useState(false);
+    const [ date, setDate ] = useState();
 
     useEffect( ( ) => {
         if (chatBody.current.scrollHeight > chatBody.current.clientHeight) {
@@ -35,10 +36,6 @@ export const ChatWindow = ( { chatInfo, user } ) => {
     const toggleEmojiBar = ( ) => {
         setEmojiBarToggle(!emojiBarToggle);
     }
-
-    useEffect(() => {
-        console.log(messageList.length);
-    })
 
     const handleMicrophoneClick = ( ) => {
         if (!listening) {
@@ -74,7 +71,7 @@ export const ChatWindow = ( { chatInfo, user } ) => {
 
     useEffect( ( ) => {
         API.getMessageList( chatInfo, setMessageList );
-    }, [ sent ]);
+    }, [ sent, chatInfo ]);
 
     return (
         <div className='chat-window--container' >
@@ -107,10 +104,12 @@ export const ChatWindow = ( { chatInfo, user } ) => {
                 <div className='chat-window-body' ref={ chatBody }>
                     { messageList &&
                         messageList.map( (item, key) => (
-                            <MessageItem 
+                            <>
+                                <MessageItem 
                                 data={ item } 
                                 user={ user }
                                 id={`${key}`} />
+                            </>
                         ))
                     }
                 </div>
